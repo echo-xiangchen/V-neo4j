@@ -1,0 +1,5 @@
+apoc.RegisterComponentFactory
+apoc.ApocConfigExtensionFactory
+apoc.ApocExtensionFactory
+apoc.PoolExtensionFactory
+apoc.TTLConfigExtensionFactory

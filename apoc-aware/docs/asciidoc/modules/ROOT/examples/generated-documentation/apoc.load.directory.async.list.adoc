@@ -1,0 +1,5 @@
+¦xref::overview/apoc.load/apoc.load.directory.async.list.adoc[apoc.load.directory.async.list icon:book[]] +
+
+ - List of all folder listeners
+¦label:procedure[]
+¦label:apoc-core[]
