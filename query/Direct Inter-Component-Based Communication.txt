@@ -1,0 +1,13 @@
+WITH "MATCH (srcVar:cVariable)
+CALL apoc.aware.path.expandConfig(srcVar, {
+    relationshipFilter: 'parWrite>',
+    labelFilter: 'cVariable',
+    minLevel: 1,
+    maxLevel: 1
+})
+YIELD path WITH path, last(nodes(path)) AS dstVar
+WHERE srcVar.comp <> dstVar.comp
+RETURN path" AS query
+CALL apoc.export.csv.query(query, "neo4j-ICBC-direct-aware.csv", {})
+YIELD file,properties, time, rows, batchSize, batches, done, data
+RETURN file,properties, time, rows, batchSize, batches, done, data;

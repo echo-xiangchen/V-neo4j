@@ -1,0 +1,14 @@
+WITH "MATCH (srcFunc:cFunction)
+CALL apoc.aware.path.expandConfig(srcFunc, {
+    relationshipFilter: 'call>',
+    labelFilter: '>cFunction',
+    minLevel: 1,
+    maxLevel:1
+})
+YIELD path 
+WITH path, last(nodes(path)) AS dstFunc 
+WHERE srcFunc.id = dstFunc.id 
+RETURN path" AS query
+CALL apoc.export.csv.query(query, "neo4j-directRecursion-aware.csv", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data;

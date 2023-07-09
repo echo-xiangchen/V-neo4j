@@ -1,0 +1,16 @@
+WITH "MATCH (a:cVariable)
+CALL apoc.aware.path.expandConfig(a, {
+    relationshipFilter: 'parWrite>|varWrite>,parWrite>|varWrite>,parWrite>|varWrite>',
+    labelFilter: 'cVariable',
+    minLevel: 3,
+    maxLevel:3
+})
+YIELD path WITH path, nodes(path) AS nodes
+WHERE nodes[0].id <> nodes[1].id AND nodes[0].id <> nodes[2].id AND nodes[0].id = nodes[3].id
+AND nodes[1].id <> nodes[2].id AND nodes[1].id <> nodes[3].id
+AND nodes[2].id <> nodes[3].id
+
+RETURN path" AS query
+CALL apoc.export.csv.query(query, "neo4j-triangle-aware.csv", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data;

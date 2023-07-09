@@ -1,0 +1,12 @@
+WITH "MATCH (p:cFunction)
+CALL apoc.aware.path.expandConfig(p, {
+    relationshipFilter: 'call>',
+    labelFilter: 'cFunction',
+    minLevel: 1
+})
+YIELD path WITH path, last(nodes(path)) AS b
+WHERE p.id <> b.id
+RETURN path" AS query
+CALL apoc.export.csv.query(query, "neo4j-transCall-aware-full.csv", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data;
